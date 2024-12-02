@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^4.9.124",
+    "tesseract.js": "^5.1.1"
+  }
+}
