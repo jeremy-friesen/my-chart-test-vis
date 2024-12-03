@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Chart Vis.</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* body {
+        font-family: Arial, sans-serif;
+      } */
+      .tabs {
+        display: flex;
+        border-bottom: 2px solid #ccc;
+        /* no line break */
+      }
+      .tab {
+        flex: 1;
+        flex-wrap: nowrap;
+        text-align: center;
+        padding: 10px;
+        cursor: pointer;
+        border-bottom: none;
+      }
+      .tab.active {
+        font-weight: bold;
+      }
+      .tab-content {
+        display: none;
+        /* padding: 20px; */
+      }
+      .tab-content.active {
+        display: block;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>MyChart Test Visualization</h1>
+    <p>Upload an HTML file to see visualizations.</p>
+
+    <input type="file" id="uploadHtml" accept="text/html" />
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" data-tab="charts">Charts</div> 
+      <!-- space -->
+       <div class="tab" data-tab="notes"></div>
+      <div class="tab" data-tab="data-table">Table</div>
+    </div>
+
+    <!-- Tab Content -->
+    <div id="charts" class="tab-content active">
+      <!-- Container for charts -->
+      <div id="charts-container" class="chart-container"></div>
+    </div>
+    <div id="data-table" class="tab-content">
+      <!-- Table to display extracted data -->
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Reference Range</th>
+            <th>Normalcy</th>
+            <th>Note/Annotation</th>
+            <th>Test Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script src="script.js"></script>
+    <script>
+      // Tab switching functionality
+      document.querySelectorAll('.tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          // Remove active class from all tabs
+          document
+            .querySelectorAll('.tab')
+            .forEach((t) => t.classList.remove('active'));
+          // Remove active class from all tab contents
+          document
+            .querySelectorAll('.tab-content')
+            .forEach((content) => content.classList.remove('active'));
+
+          // Add active class to the clicked tab
+          tab.classList.add('active');
+          // Add active class to the corresponding tab content
+          document
+            .getElementById(tab.getAttribute('data-tab'))
+            .classList.add('active');
+        });
+      });
+    </script>
+  </body>
+</html>

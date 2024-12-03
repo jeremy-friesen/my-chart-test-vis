@@ -1,0 +1,224 @@
+table {
+    width: 50%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+.hidden {
+    display: none;
+}
+
+.chart-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+canvas {
+    max-width: 500px;
+    width: 100%;
+    max-height: 400px;
+}
+
+body {
+    /* display: flex; */
+    justify-content: center;
+    /* Centers content horizontally */
+    text-align: center;
+    /* Optional, to center text inside containers */
+    margin: 0;
+    /* Remove default margin */
+}
+
+#charts-container {
+    display: flex;
+    flex-direction: column;
+    /* Stack chart and table vertically */
+    align-items: center;
+    /* Center both chart and table horizontally */
+}
+
+table {
+    width: 50%;
+    /* Set the width of the table */
+    margin-top: 20px;
+    /* Add some space between chart and table */
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #f7f9fc;
+    /* Soft background color */
+    color: #333;
+    /* Neutral text color */
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+/* Headings */
+h1 {
+    font-size: 2rem;
+    color: #2a5d8f;
+    /* Accent color */
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+/* File Upload */
+input[type='file'] {
+    padding: 10px;
+    border: 1px solid #d1d9e6;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #555;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+input[type='file']:hover {
+    background-color: #eef3f9;
+    border-color: #b0c4de;
+}
+
+/* Charts Container */
+#charts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 20px;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #d1d9e6;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 20px;
+    border-collapse: collapse;
+    border: 1px solid #d1d9e6;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #e8eff5;
+    font-size: 1rem;
+}
+
+th {
+    background-color: #2a5d8f;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f7fc;
+}
+
+tr:hover {
+    background-color: #eef3f9;
+}
+
+/* Button Styling */
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #ffffff;
+    background-color: #2a5d8f;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #184a6d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    input[type='file'] {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    table,
+    canvas {
+        width: 100%;
+    }
+
+    th,
+    td {
+        font-size: 0.9rem;
+    }
+}
