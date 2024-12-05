@@ -176,6 +176,112 @@ function createChartForTest(testName, testData) {
     });
 }
 
+function createTable(tableData) {
+    var tableParent = document.getElementById('data-table')
+    var table = document.createElement('table');
+    var tableBody = document.createElement('tbody');
+
+    tableData.forEach(function (rowData) {
+        var row = document.createElement('tr');
+
+        rowData.forEach(function (cellData) {
+            var cell = document.createElement('td');
+            cell.appendChild(document.createTextNode(cellData));
+            row.appendChild(cell);
+        });
+
+        tableBody.appendChild(row);
+    });
+
+    table.appendChild(tableBody);
+    tableParent.appendChild(table);
+}
+
+document.getElementById('uploadXLS').addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+        console.error("No file selected.");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+
+        // Get the first sheet's name
+        const sheetName = workbook.SheetNames[0];
+        // Get the first sheet's data
+        const sheet = workbook.Sheets[sheetName];
+        // Convert sheet data to JSON
+        const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+        const aoa = jsonData.filter(item => item.length > 1);
+        createTable(aoa);
+
+        console.log("Excel Data:", aoa);
+
+        // Print the data on the page
+        // const output = document.getElementById('output');
+        // output.innerHTML = `<pre>${JSON.stringify(jsonData, null, 2)}</pre>`;
+
+        const convertExcelDate = (serial) => {
+            const excelEpoch = new Date(1899, 11, 30); // Excel epoch starts from Dec 30, 1899
+            return new Date(excelEpoch.getTime() + serial * 86400000).toLocaleDateString();
+        };
+
+        const headers = aoa[0];
+        const values = aoa.slice(2).filter(row => row.length > 0); // Exclude empty rows
+        const dates = values.map(row => convertExcelDate(row[0]));
+
+        // 3. Generate a chart for each column (except the first one)
+        const chartContainer = document.getElementById("charts-container");
+        headers.slice(1).forEach((header, colIndex) => {
+            // Create a canvas element for each chart
+            const canvas = document.createElement("canvas");
+            canvas.width = 800;
+            canvas.height = 400;
+            chartContainer.appendChild(canvas);
+
+            // Extract data for the current column
+            const columnData = values.map(row => parseFloat(row[colIndex + 1]) || 0);
+
+            // Render the chart using Chart.js
+            new Chart(canvas.getContext("2d"), {
+                type: "bar",
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: header,
+                        data: columnData,
+                        backgroundColor: `hsl(${(colIndex * 40) % 360}, 70%, 60%)`,
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { title: { display: true, text: "Dates" } },
+                        y: { title: { display: true, text: "Measurements (MM)" } },
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: header },
+                    },
+                },
+            });
+        });
+    };
+
+    reader.onerror = function (err) {
+        console.error("Error reading file:", err);
+    };
+
+    reader.readAsArrayBuffer(file);
+
+});
+
+
 // Parse the uploaded HTML file
 document.getElementById('uploadHtml').addEventListener('change', (event) => {
     const file = event.target.files[0];

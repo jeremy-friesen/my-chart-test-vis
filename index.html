@@ -42,15 +42,22 @@
 
   <body>
     <h1>MyChart Test Visualization</h1>
-    <p>Upload an HTML file to see visualizations.</p>
+    <p>Upload a file to see visualizations.</p>
 
+    <h3 fontweight="bold">HTML MyChart File</h3>
     <input type="file" id="uploadHtml" accept="text/html" />
+    <h3 fontweight="bold">XLS CT Scan File</h3>
+    <input type="file" id="uploadXLS" accept=".xls,.xlsx" />
+    <div id="output"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <div id="chartContainerCT"></div>
 
     <!-- Tabs -->
     <div class="tabs">
-      <div class="tab active" data-tab="charts">Charts</div> 
+      <div class="tab active" data-tab="charts">Charts</div>
       <!-- space -->
-       <div class="tab" data-tab="notes"></div>
+      <div class="tab" data-tab="notes"></div>
       <div class="tab" data-tab="data-table">Table</div>
     </div>
 
