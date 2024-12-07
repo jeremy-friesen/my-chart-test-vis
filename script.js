@@ -1,7 +1,7 @@
 const pdfjsLib = window['pdfjs-dist/build/pdf'];
 let chart;
 
-function tableToCSV() {
+function tableToCSV(resultsOnly) {
 
     // Variable to store the final csv data
     let csv_data = [];
@@ -23,12 +23,69 @@ function tableToCSV() {
         }
 
         // Combine each column value with comma
-        csv_data.push(csvrow.join(","));
+        csv_data.push(csvrow);
     }
     // Combine each row data with new line character
-    csv_data = csv_data.join('\n');
+    // csv_data = csv_data.join('\n');
+    
+    if (!resultsOnly){
+        var csv_text = []
+        for (let i = 0; i < rows.length; i++) {
+            csv_text.push(csv_data[i].join(","));
+        }
+        csv_text = csv_text.join('\n');
+        downloadCSVFile(csv_text)
+    } else {
+        console.log(csv_data)
+        let dates = []
+        let resultTableData = {}
+        for(let i = csv_data.length - 1; i > 0; i--) {
+            let curDate = csv_data[i][0]
+            col = -1
+            if(!dates.includes(curDate)){
+                dates.push(curDate)
+            }
+            col = dates.indexOf(curDate)
+            let curTest = csv_data[i][1]
+            let curResult = csv_data[i][2]
+            if(!isValidNumber(curResult)){
+                continue
+            }
+            if (resultTableData[curTest]) {
+                // first appearance of date
+                if (col == -1){
+                    console.log("Huh??")
+                    // resultTableData[curTest].push(curResult)
+                    // dates.push(curDate)
+                }
+                while (col > resultTableData[curTest].length){
+                    resultTableData[curTest].push('')
+                }
+                if (col < resultTableData[curTest].length){
+                    resultTableData[curTest][col] = curResult
+                }
+                if (col == resultTableData[curTest].length){
+                    resultTableData[curTest].push(curResult)
+                }
+            } else {
+                resultTableData[curTest] = [curResult]
+                while (col > resultTableData[curTest].length){
+                    resultTableData[curTest].push('')
+                }
+                resultTableData[curTest].push(curResult)
+            }
+        }
+        console.log(dates)
+        console.log(resultTableData)
+        var tests = Object.keys(resultTableData)
+        // var csv_text = "Test,Result\n"
+        var csv_text = "Test," + dates.join(",") + "\n"
 
-    downloadCSVFile(csv_data)
+        for(let i = 0; i < tests.length; i++) {
+            csv_text = csv_text + tests[i] + "," + resultTableData[tests[i]].join(",") + "\n"
+        }
+        downloadCSVFile(csv_text)
+    }
 }
 
 function downloadCSVFile(csv_data) {

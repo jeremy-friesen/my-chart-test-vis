@@ -68,7 +68,8 @@
     </div>
     <div id="data-table" class="tab-content">
       <!-- Table to display extracted data -->
-      <button onclick="tableToCSV()">Download CSV</button>
+      <button onclick="tableToCSV(false)">Download CSV</button>
+      <button onclick="tableToCSV(true)">Download CSV(results only)</button>
       <table id="dataTable">
         <thead>
           <tr>
